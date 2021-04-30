@@ -82,14 +82,19 @@ const ThemeToggle = ({onThemeChange}) => {
     if (typeof onThemeChange === 'function') {
       onThemeChange(isToggled);
     }
-  }, [isToggled]);
+  }, [isToggled, onThemeChange]);
 
   const handleOnChange = (ev) => {
     setIsToggled(ev.target.checked);
   };
 
   return (
-    <input type="checkbox" value={isToggled} checked={isToggled} onChange={handleOnChange} />
+    <label>
+      <input type="checkbox" value={isToggled} checked={isToggled} onChange={handleOnChange} />
+      {
+        isToggled ? 'Enable light mode' : 'Enable dark mode'
+      }
+    </label>
   )
 };
 
@@ -103,6 +108,18 @@ const App = () => {
 
   return (
     <div className={`app${isDarkMode === true ? ' app--dark-mode' : ''}`}>
+        <PureCssCard type="error">
+          Dit is een kaartje met gewone CSS.
+        </PureCssCard>
+
+        <Button>
+          Test button
+        </Button>
+
+        <Toggle />
+        <TagCloud tags={tags} />
+        <Counter count={0} />
+        <Students data={students} />
         <ThemeToggle onThemeChange={handleOnThemeChange} />
     </div>
   );
