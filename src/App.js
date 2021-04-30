@@ -116,6 +116,36 @@ const AppContainer = styled.div`
   color: ${props => props.theme.textColor}
 `;
 
+const BioForm = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    essay: '',
+    likesDarkMode: true
+  });
+
+  const handleOnChange = (ev) => {
+    setFormData({
+      ...formData,
+      [ev.target.name]: (ev.target.type === 'checkbox') ? ev.target.checked : ev.target.value
+    });
+  };
+
+  return (
+    <form>
+      <label>
+        Fullname: <input type="text" placeholder="Type your name" value={formData.fullName} onChange={(ev) => handleOnChange(ev)} name="fullName" />
+      </label>
+      <label>
+        Essay: <textarea placeholder="Write your essay"  value={formData.essay} onChange={handleOnChange} name="essay" />
+      </label>
+      <label>
+        Likes dark mode: <input type="checkbox" value={formData.likesDarkMode} checked={formData.likesDarkMode} onChange={handleOnChange} name="likesDarkMode" />
+      </label>
+      <input type="submit" value="Submit"/>
+    </form>
+  )
+};
+
 const App = () => {
   const tags = ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express', 'API'];
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -127,6 +157,7 @@ const App = () => {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <AppContainer>
+          <BioForm />
           <CardStyled>
             Dit is een card met styledcomponents.
           </CardStyled>
