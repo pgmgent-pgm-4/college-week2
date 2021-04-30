@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Toggle = () => {
   const [isToggleOn, setIsToggleOn] = useState(false);
@@ -36,16 +35,74 @@ const Counter = ({count}) => {
       {count === 0 && <span>Messages: {count}</span>}
     </div>
   );
-}
+};
+
+const students = [
+  {
+    id: 'bc1e9873-6c3a-4a45-b1b5-e8864646803c',
+    name: {
+      firstName: 'Olivier',
+      lastName: 'Pieters'
+    }
+  },
+  {
+    id: 'e66a178a-2a81-4263-9013-c020b05c63cd',
+    name: {
+      firstName: 'Selie',
+      lastName: 'Peters'
+    }
+  }
+];
+
+const Students = ({data}) => {
+  return (
+    <div className="students">
+      <ul className="students__list">
+        {data.map((s) => <Student key={s.id} data={s} />)}
+      </ul>
+    </div>
+  )
+};
+
+const Student = ({data}) => {
+  return (
+    <li className="students__list-item">{data.name.firstName} {data.name.lastName}</li>
+  )
+};
+
+const ThemeToggle = ({onThemeChange}) => {
+  const [isToggled, setIsToggled] = useState(false);
+
+  useEffect(() => {
+    if (typeof onThemeChange === 'function') {
+      onThemeChange(isToggled);
+    }
+  }, [isToggled]);
+  
+  const handleOnChange = (ev) => {
+    setIsToggled(ev.target.checked);
+  };
+
+  return (
+    <input type="checkbox" value={isToggled} checked={isToggled} onChange={handleOnChange} />
+  )
+};
 
 const App = () => {
   const tags = ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express', 'API'];
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleOnThemeChange = (isSelected) => {
+    setIsDarkMode(isSelected);
+  }
 
   return (
-    <div className="app">
+    <div className={`app${isDarkMode === true ? ' app--dark-mode' : ''}`}>
       <Toggle />
       <TagCloud tags={tags} />
       <Counter count={0} />
+      <Students data={students} />
+      <ThemeToggle onThemeChange={handleOnThemeChange} />
     </div>
   );
 }
