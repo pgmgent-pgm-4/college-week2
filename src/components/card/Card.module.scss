@@ -1,0 +1,18 @@
+@import '../../styling/base/variables.scss';
+
+.card {
+    background-color: $white;
+    padding: $spacing-base;
+    border-radius: $radius-base;
+
+    max-width: 15rem;
+}
+
+.error {
+    background-color: $primary;
+}
+
+.info {
+    background-color: $secondary;
+    color: $white;
+}

@@ -1,5 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
+import './styling/main.scss'
+
+import Button from './components/button/Button';
+import PureCssCard from './components/card/Card'
 import { useState } from 'react';
 
 const Toggle = () => {
@@ -46,6 +49,14 @@ const App = () => {
       <Toggle />
       <TagCloud tags={tags} />
       <Counter count={0} />
+
+      <PureCssCard type="error">
+        Dit is een kaartje met gewone CSS.
+      </PureCssCard>
+
+      <Button>
+        Test button
+      </Button>
     </div>
   );
 }
