@@ -1,9 +1,11 @@
 import './App.css';
 import './styling/main.scss'
 
+import styled, {ThemeProvider} from 'styled-components';
 import { useEffect, useState } from 'react';
 
 import Button from './components/button/Button';
+import CardStyled from './components/card/CardStyled';
 import PureCssCard from './components/card/Card'
 
 const Toggle = () => {
@@ -98,6 +100,22 @@ const ThemeToggle = ({onThemeChange}) => {
   )
 };
 
+const lightTheme = {
+  backgroundColor: 'white',
+  textColor: 'black'
+}
+
+const darkTheme = {
+  backgroundColor: 'black',
+  textColor: 'white'
+}
+
+const AppContainer = styled.div`
+  min-height: 100vh;
+  background-color: ${props => props.theme.backgroundColor};
+  color: ${props => props.theme.textColor}
+`;
+
 const App = () => {
   const tags = ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express', 'API'];
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -107,21 +125,27 @@ const App = () => {
   }
 
   return (
-    <div className={`app${isDarkMode === true ? ' app--dark-mode' : ''}`}>
-        <PureCssCard type="error">
-          Dit is een kaartje met gewone CSS.
-        </PureCssCard>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <AppContainer>
+          <CardStyled>
+            Dit is een card met styledcomponents.
+          </CardStyled>
 
-        <Button>
-          Test button
-        </Button>
+          <PureCssCard type="error">
+            Dit is een kaartje met gewone CSS.
+          </PureCssCard>
 
-        <Toggle />
-        <TagCloud tags={tags} />
-        <Counter count={0} />
-        <Students data={students} />
-        <ThemeToggle onThemeChange={handleOnThemeChange} />
-    </div>
+          <Button>
+            Test button
+          </Button>
+
+          <Toggle />
+          <TagCloud tags={tags} />
+          <Counter count={0} />
+          <Students data={students} />
+          <ThemeToggle onThemeChange={handleOnThemeChange} />
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
